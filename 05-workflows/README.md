@@ -3,7 +3,7 @@ title: Workflows
 description: The project lifecycle from first contact to aftercare.
 status: draft
 owner: bjorn
-updated: 2026-08-07
+updated: 2026-09-09
 ---
 
 # Workflows
@@ -23,8 +23,12 @@ of this section is the detail behind each phase.
 | 6. Hand over | [Client handover](client-handover.md) |
 | 7. Maintain | [Aftercare and SLA](aftercare-and-sla.md) |
 
-Sitting outside the sequence: [Site migration](site-migration.md), for when the project is
-moving an existing site rather than building a new one.
+Sitting outside the sequence:
+
+- [Site migration](site-migration.md) — when the project is moving an existing site rather
+  than building a new one.
+- [Website translations with WPML](website-translations-wpml.md) — the order to translate a
+  WordPress site in, whether that happens during the build or long after launch.
 
 ## Workflows versus templates
 
