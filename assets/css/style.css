@@ -34,7 +34,7 @@
   --color-accent:      var(--green);
   --color-accent-soft: rgba(163, 197, 133, 0.14);
 
-  --sidebar-w:  400px;
+  --sidebar-w:  325px;
   --toc-w:      15rem;
   --header-h:   3.5rem;
   --gutter:     1.5rem;
@@ -401,9 +401,10 @@ a:hover, a:focus {
   color: var(--color-text);
   font-weight: 600;
   padding: 0.35rem 0.6rem;
+  margin-bottom: 0.3rem;
 }
 
-.sidebar-details { margin-bottom: 0.15rem; }
+.sidebar-details { margin-bottom: 0.5rem; }
 
 .sidebar-summary {
   cursor: pointer;
