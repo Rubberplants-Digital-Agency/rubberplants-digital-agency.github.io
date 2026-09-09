@@ -46,8 +46,10 @@ build step to run before committing — push to `main` and the site rebuilds.
 | --- | --- |
 | `_config.yml` | Site settings, pretty permalinks, the layout default applied to every page. |
 | `_data/nav.yml` | The header navigation: Home plus the nine numbered sections. Each section's dropdown is built from the file tree, so a new document appears in the menu on its own. |
-| `_layouts/default.html` | The only layout. There is no bundled theme. |
-| `assets/css/style.css` | All site styling. Plain CSS, no framework, no JavaScript. |
+| `_layouts/default.html` | The only layout: header, sidebar, content. There is no bundled theme. |
+| `assets/css/style.css` | All site styling. Plain CSS, no framework. |
+| `search.json` | The search index, generated from the pages at build time. Nothing to maintain. |
+| `assets/js/search.js` | Header search and the mobile menu. The only JavaScript on the site. |
 
 This file is listed under `exclude` in `_config.yml`, so it is the repository landing page
 only — it is not published as a site page.

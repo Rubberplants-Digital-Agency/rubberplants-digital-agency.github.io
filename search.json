@@ -1,0 +1,31 @@
+---
+layout: null
+permalink: /search.json
+---
+{%- comment -%}
+  The search index, built at publish time from the pages themselves — no plugin,
+  no external service, nothing to keep in sync by hand.
+
+  `layout: null` matters: the site-wide `defaults` block in _config.yml would
+  otherwise wrap this file in the HTML layout. An explicit key in front matter
+  beats a default, and a nil layout is applied as "no layout" without a warning.
+
+  Body text is truncated: enough to match on, small enough that the whole index
+  stays a single quick fetch.
+{%- endcomment -%}
+{%- assign docs = site.pages | where_exp: "p", "p.title" | sort: "url" -%}
+[
+{%- for doc in docs -%}
+  {%- unless forloop.first -%},{%- endunless -%}
+  {%- comment -%} Human-readable section label, matched from the nav data. {%- endcomment -%}
+  {%- assign section = "" -%}
+  {%- for item in site.data.nav -%}
+    {%- if item.dropdown -%}
+      {%- assign n = item.url | size -%}
+      {%- assign head = doc.url | slice: 0, n -%}
+      {%- if head == item.url -%}{%- assign section = item.title -%}{%- break -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{"title":{{ doc.title | jsonify }},"url":{{ doc.url | relative_url | jsonify }},"section":{{ section | jsonify }},"description":{{ doc.description | default: "" | jsonify }},"text":{{ doc.content | strip_html | normalize_whitespace | truncate: 1400 | jsonify }}}
+{%- endfor -%}
+]

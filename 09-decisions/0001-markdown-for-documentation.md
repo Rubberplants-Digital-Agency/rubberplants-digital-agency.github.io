@@ -42,7 +42,12 @@ The repository is now published at <https://rubberplants-digital-agency.github.i
 GitHub Pages, built with Jekyll from `main` / root ("Deploy from a branch"). Specifically:
 
 - **No GitHub Actions workflow and no bundled theme.** The whole site is a `_config.yml`,
-  one layout in `_layouts/`, one stylesheet, and a `_data/nav.yml` naming the nine sections.
+  one layout in `_layouts/`, one stylesheet, one small script, and a `_data/nav.yml` naming
+  the nine sections.
+- **Sidebar navigation and search.** The layout renders the full tree in a left sidebar and
+  a search box in the header. The index at `/search.json` is generated from the pages
+  themselves at build time, fetched by the browser on first use, and matched client-side —
+  no plugin, no external search service, nothing to keep in sync.
 - **No build step for a contributor.** Writing a document is still writing a Markdown file
   and opening a pull request. Push to `main` and the site rebuilds itself.
 - **The folder structure is untouched.** One file moved: the root `README.md` became
@@ -95,15 +100,17 @@ version control with the rest of the work.
 history and blame. No subscription. Editable in the same editor as everything else. Portable
 to any generator later without moving a file.
 
-**Bad:** Still no search — the published site has navigation but no search box, and GitHub's
-own search across a repository is mediocre. No WYSIWYG, so non-technical colleagues are
+**Bad:** Search is shallow. The generated index covers every page's title, description and
+roughly its first 1,400 characters — enough to find the right document, not enough to find a
+phrase buried deep in a long one. No WYSIWYG, so non-technical colleagues are
 effectively excluded from contributing. Images and diagrams are more effort than in a hosted
 tool. The repository is public, which means a permanent discipline around what may be
 committed — and now doubly so, because it is also a published website rather than a folder
 someone has to go looking for.
 
-**Revisit when:** finding things becomes the complaint despite the navigation, or when
-someone outside the development team needs to edit regularly. The first case means a
-generator with built-in search — MkDocs Material or Astro Starlight — which would replace the
-Jekyll layer described above without moving a single Markdown file. The second means
-reconsidering the format entirely.
+**Revisit when:** the shallow index stops being good enough — someone searching for a phrase
+they know is in the docs and not finding it — or when someone outside the development team
+needs to edit regularly. The first case means full-text search, either by indexing whole
+pages or by moving to a generator that ships it (MkDocs Material, Astro Starlight); either
+would replace the Jekyll layer described above without moving a single Markdown file. The
+second means reconsidering the format entirely.

@@ -25,6 +25,9 @@ New to the team? Read in this order:
 4. [Development workflow](05-workflows/development-workflow.md)
 5. The platform section for whatever you are building — [WordPress](03-platforms/wordpress/), [WooCommerce](03-platforms/woocommerce/), [HubSpot](03-platforms/hubspot/)
 
+[Start with Ways of working](01-handbook/ways-of-working.md){: .btn .btn-primary}
+[How to contribute](CONTRIBUTING.md){: .btn .btn-secondary}
+
 ## Sections
 
 | Section | What is in it |

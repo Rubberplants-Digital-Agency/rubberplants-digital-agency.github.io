@@ -3,7 +3,7 @@
 # This is an org site (rubberplants-digital-agency.github.io), so it serves from the domain
 # root: baseurl stays empty.
 
-title: Rubberplants Digital Agency
+title: "Rubberplants | Digital Agency"   # quoted: the pipe is a YAML block indicator
 description: The shared knowledge base for how Rubberplants builds, ships, and maintains websites.
 lang: en
 
