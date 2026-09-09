@@ -49,7 +49,7 @@ build step to run before committing — push to `main` and the site rebuilds.
 | `_layouts/default.html` | The only layout: header, sidebar, content. There is no bundled theme. |
 | `assets/css/style.css` | All site styling. Plain CSS, no framework. |
 | `search.json` | The search index, generated from the pages at build time. Nothing to maintain. |
-| `assets/js/search.js` | Header search and the mobile menu. The only JavaScript on the site. |
+| `assets/js/site.js` | Header search, the mobile menu, and the "On this page" contents column. The only JavaScript on the site. |
 
 This file is listed under `exclude` in `_config.yml`, so it is the repository landing page
 only — it is not published as a site page.

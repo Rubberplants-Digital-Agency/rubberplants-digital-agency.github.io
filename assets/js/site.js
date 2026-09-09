@@ -1,11 +1,13 @@
-/* Rubberplants documentation — header search and the mobile sidebar toggle.
-   No dependencies. The index at /search.json is fetched once, on first focus,
-   so a visitor who never searches never downloads it. */
+/* Rubberplants documentation — header search, the mobile sidebar toggle, and the
+   "On this page" table of contents. No dependencies.
+
+   All three are progressive: the page, the sidebar tree and every link work with
+   this file blocked. Search and the TOC simply do not appear. */
 
 (function () {
   'use strict';
 
-  /* ---------- Mobile sidebar toggle ---------- */
+  /* ================= Mobile sidebar toggle ================= */
 
   var toggle = document.querySelector('.menu-toggle');
   var sidebar = document.getElementById('sidebar');
@@ -25,7 +27,91 @@
     });
   }
 
-  /* ---------- Search ---------- */
+  /* ================= On this page ================= */
+
+  (function () {
+    var main = document.querySelector('.site-main');
+    var toc = document.getElementById('toc');
+    if (!main || !toc) return;
+
+    var list = toc.querySelector('.toc__list');
+    var headings = Array.prototype.slice.call(main.querySelectorAll('h2, h3'));
+
+    /* One heading is not a table of contents, it is a heading. */
+    if (headings.length < 2) return;
+
+    var used = Object.create(null);
+
+    function slug(text) {
+      var base = text.toLowerCase().trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-') || 'section';
+
+      var id = base;
+      var n = 2;
+      while (used[id] || document.getElementById(id)) { id = base + '-' + n++; }
+      used[id] = true;
+      return id;
+    }
+
+    var entries = headings.map(function (heading) {
+      /* Kramdown gives headings an id already; this is the safety net. */
+      if (!heading.id) heading.id = slug(heading.textContent);
+
+      var item = document.createElement('li');
+      item.className = 'toc__item toc__item--' + heading.tagName.toLowerCase();
+
+      var link = document.createElement('a');
+      link.href = '#' + heading.id;
+      link.textContent = heading.textContent;
+      item.appendChild(link);
+      list.appendChild(item);
+
+      return { heading: heading, item: item };
+    });
+
+    toc.hidden = false;
+
+    /* ---- Scroll spy ----
+       A plain scroll read rather than IntersectionObserver: a long section with
+       no heading in the observed band leaves the observer with nothing
+       intersecting and the highlight goes blank. Walking the list and taking the
+       last heading above the fold always has an answer. */
+
+    var current = null;
+
+    function markCurrent() {
+      var offset = toc.getBoundingClientRect().top + 24;
+      var found = entries[0];
+
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].heading.getBoundingClientRect().top <= offset) found = entries[i];
+        else break;
+      }
+
+      if (found === current) return;
+      if (current) current.item.classList.remove('is-current');
+      found.item.classList.add('is-current');
+      current = found;
+    }
+
+    var queued = false;
+
+    function onScroll() {
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(function () {
+        markCurrent();
+        queued = false;
+      });
+    }
+
+    markCurrent();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+  })();
+
+  /* ================= Search ================= */
 
   var input = document.getElementById('search-input');
   var panel = document.getElementById('search-results');
@@ -215,10 +301,10 @@
       event.preventDefault();
       highlight(active - 1);
     } else if (event.key === 'Enter') {
-      var current = panel.querySelector('.is-active a');
-      if (current) {
+      var choice = panel.querySelector('.is-active a');
+      if (choice) {
         event.preventDefault();
-        window.location.href = current.href;
+        window.location.href = choice.href;
       }
     }
   });

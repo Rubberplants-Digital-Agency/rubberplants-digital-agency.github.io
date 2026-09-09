@@ -48,6 +48,10 @@ GitHub Pages, built with Jekyll from `main` / root ("Deploy from a branch"). Spe
   a search box in the header. The index at `/search.json` is generated from the pages
   themselves at build time, fetched by the browser on first use, and matched client-side —
   no plugin, no external search service, nothing to keep in sync.
+- **A contents column on wide screens.** Long documents get an "On this page" list built
+  from their own `##` and `###` headings, which highlights the section being read. It is
+  built in the browser and appears only where there is room for a third column, so it costs
+  the Markdown nothing and no document has to maintain its own table of contents.
 - **No build step for a contributor.** Writing a document is still writing a Markdown file
   and opening a pull request. Push to `main` and the site rebuilds itself.
 - **The folder structure is untouched.** One file moved: the root `README.md` became
