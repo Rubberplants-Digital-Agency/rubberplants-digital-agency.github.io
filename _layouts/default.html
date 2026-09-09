@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {%- comment -%} Page title first, site title as the suffix; homepage shows the site title alone. {%- endcomment -%}
+  {%- if page.title and page.title != site.title -%}
+    <title>{{ page.title | strip_html }} · {{ site.title }}</title>
+  {%- else -%}
+    <title>{{ site.title }}</title>
+  {%- endif -%}
+
+  <meta name="description" content="{{ page.description | default: site.description | strip_html | normalize_whitespace | escape }}">
+
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="site-logo" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+
+    {%- comment -%}
+      Sorting by URL puts a subsection index directly ahead of its own pages
+      (/03-platforms/flatsome/ before /03-platforms/flatsome/gotchas/), so a flat
+      loop comes out already grouped.
+    {%- endcomment -%}
+    {%- assign sorted_pages = site.pages | sort: 'url' -%}
+
+    <nav class="site-nav" aria-label="Main">
+      <ul class="nav-list">
+        {%- for item in site.data.nav -%}
+
+          {%- if item.dropdown -%}
+            {%- assign section_len = item.url | size -%}
+
+            {%- comment -%}
+              Does this section contain sub-folders? Only 03-platforms does today.
+              Knowing up front lets the menu indent nested pages under their
+              subsection without indenting flat sections for no reason.
+            {%- endcomment -%}
+            {%- assign has_subgroups = false -%}
+            {%- for p in sorted_pages -%}
+              {%- assign head = p.url | slice: 0, section_len -%}
+              {%- if head == item.url and p.url != item.url -%}
+                {%- assign rest = p.url | remove_first: item.url -%}
+                {%- assign depth = rest | split: '/' | size -%}
+                {%- if depth > 1 -%}
+                  {%- assign has_subgroups = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- comment -%} Highlight the section the current page lives in. {%- endcomment -%}
+            {%- assign page_head = page.url | slice: 0, section_len -%}
+
+            <li class="nav-item nav-item--has-menu">
+              <details class="nav-details">
+                <summary class="nav-summary{% if page_head == item.url %} is-active{% endif %}">{{ item.title }}</summary>
+
+                <ul class="nav-menu">
+                  <li class="nav-menu__item">
+                    <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>Overview</a>
+                  </li>
+
+                  {%- for p in sorted_pages -%}
+                    {%- assign head = p.url | slice: 0, section_len -%}
+                    {%- if head == item.url and p.url != item.url -%}
+                      {%- assign rest = p.url | remove_first: item.url -%}
+                      {%- assign depth = rest | split: '/' | size -%}
+                      <li class="nav-menu__item{% if has_subgroups %} nav-menu__item--depth-{{ depth }}{% endif %}">
+                        <a href="{{ p.url | relative_url }}"{% if page.url == p.url %} aria-current="page"{% endif %}>{{ p.title }}</a>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </details>
+            </li>
+
+          {%- else -%}
+            <li class="nav-item">
+              <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a>
+            </li>
+          {%- endif -%}
+
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </header>
+
+  <main class="site-main" id="content">
+    {%- if page.title %}
+    <h1 class="page-title">{{ page.title }}</h1>
+    {%- endif %}
+
+    {%- if page.description or page.status or page.updated %}
+    <p class="page-meta">
+      {%- if page.description %}{{ page.description }}{% endif -%}
+      {%- if page.status %} <span class="status status--{{ page.status }}">{{ page.status }}</span>{% endif -%}
+      {%- if page.updated %} <span class="updated">Updated {{ page.updated }}</span>{% endif -%}
+    </p>
+    {%- endif %}
+
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    {%- comment -%} Glossary and Contributing are not in the menu, so keep them reachable here. {%- endcomment -%}
+    <nav class="footer-nav" aria-label="Secondary">
+      <a href="{{ '/glossary/' | relative_url }}">Glossary</a>
+      <a href="{{ '/contributing/' | relative_url }}">Contributing</a>
+    </nav>
+    <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}</p>
+  </footer>
+
+</body>
+</html>

@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Roll back a deploy
-
 > **Draft** — not authoritative yet.
 
 ## Symptoms

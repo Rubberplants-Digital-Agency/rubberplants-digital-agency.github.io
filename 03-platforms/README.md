@@ -4,9 +4,8 @@ description: Per-stack technical knowledge.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /03-platforms/
 ---
-
-# Platforms
 
 The deepest section of the repo, and the one that grows fastest. Each subfolder covers one
 stack: how we set it up, the conventions we follow, and the traps that generic knowledge of

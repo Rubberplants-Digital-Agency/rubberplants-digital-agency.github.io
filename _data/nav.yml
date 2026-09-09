@@ -1,0 +1,51 @@
+# Primary navigation.
+#
+# Home is a plain link. Every other entry is a numbered section folder, rendered as a
+# dropdown by _layouts/default.html.
+#
+# Only the section itself is listed here — the layout fills each dropdown by collecting
+# the pages whose URL sits under `url`, sorted by URL. So a new document appears in the
+# menu as soon as it is committed, with no edit to this file. Titles in the menu come
+# from each page's own `title` front matter.
+#
+# `url` must match the section's built URL exactly, trailing slash included. Folder
+# README.md files carry a matching `permalink` in their front matter.
+
+- title: Home
+  url: /
+
+- title: Handbook
+  url: /01-handbook/
+  dropdown: true
+
+- title: Standards
+  url: /02-standards/
+  dropdown: true
+
+- title: Platforms
+  url: /03-platforms/
+  dropdown: true
+
+- title: Infrastructure
+  url: /04-infrastructure/
+  dropdown: true
+
+- title: Workflows
+  url: /05-workflows/
+  dropdown: true
+
+- title: Runbooks
+  url: /06-runbooks/
+  dropdown: true
+
+- title: Snippets
+  url: /07-snippets/
+  dropdown: true
+
+- title: Templates
+  url: /08-templates/
+  dropdown: true
+
+- title: Decisions
+  url: /09-decisions/
+  dropdown: true

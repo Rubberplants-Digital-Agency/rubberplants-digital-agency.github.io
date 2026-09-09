@@ -4,9 +4,8 @@ description: UX Builder, custom elements, and the traps generic WordPress knowle
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /03-platforms/flatsome/
 ---
-
-# Flatsome
 
 Our default WooCommerce theme. Flatsome has version-specific behaviour — load order,
 builder registration timing, template resolution — that general WordPress knowledge gets

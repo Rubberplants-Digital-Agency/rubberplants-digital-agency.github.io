@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Hacked site recovery
-
 > **Draft** — not authoritative yet.
 
 ## Symptoms

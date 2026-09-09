@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Site email is not arriving
-
 > **Draft** — not authoritative yet.
 
 ## Symptoms

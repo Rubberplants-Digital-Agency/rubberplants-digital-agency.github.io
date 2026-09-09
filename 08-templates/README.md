@@ -4,9 +4,8 @@ description: Copyable documents and checklists.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /08-templates/
 ---
-
-# Templates
 
 Copy these, do not edit them in place. Each one is the artefact that comes out of a phase in
 the [project lifecycle](../05-workflows/lifecycle-overview.md).

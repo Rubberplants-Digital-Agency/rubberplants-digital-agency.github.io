@@ -4,9 +4,8 @@ description: The opinionated rules every project follows.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /02-standards/
 ---
-
-# Standards
 
 This section is deliberately prescriptive. These are not suggestions — they are the bar
 every project clears, and code review checks against them. Where a rule has a real

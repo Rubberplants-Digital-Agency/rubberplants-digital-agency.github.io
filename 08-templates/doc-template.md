@@ -6,21 +6,17 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Template: documentation page
-
 Copy everything inside the block below into a new file, then delete whatever does not apply.
 Not every page needs every section — an empty heading is worse than no heading.
 
 ````markdown
 ---
-title: <Sentence case, matches the H1 below>
+title: <Sentence case. The site layout renders this as the page H1.>
 description: <One sentence. Shows in folder indexes and search results.>
 status: draft
 owner: <one name>
 updated: <YYYY-MM-DD>
 ---
-
-# <Title>
 
 <One or two sentences: what this covers and who needs it. No preamble, no "in this
 document we will". Get to the point.>

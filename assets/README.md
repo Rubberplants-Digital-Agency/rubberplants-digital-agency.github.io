@@ -4,9 +4,8 @@ description: Images and diagrams used across the documentation.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /assets/
 ---
-
-# Assets
 
 | Folder | Contents |
 | --- | --- |

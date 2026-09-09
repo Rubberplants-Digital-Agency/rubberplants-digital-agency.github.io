@@ -4,9 +4,8 @@ description: Something is broken. Do exactly this.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /06-runbooks/
 ---
-
-# Runbooks
 
 Written to be followed under pressure, by someone who may never have touched this platform
 before. Numbered imperative steps, no theory, no build-up. If you need to understand *why*

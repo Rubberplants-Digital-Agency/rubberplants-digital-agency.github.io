@@ -4,9 +4,8 @@ description: Hosting, DNS, mail, backups, and monitoring.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /04-infrastructure/
 ---
-
-# Infrastructure
 
 Everything underneath the site. Written as general practice — specific hosts, zones, and
 credentials for individual clients stay in the private repo.

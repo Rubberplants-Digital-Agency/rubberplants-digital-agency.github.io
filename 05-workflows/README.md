@@ -4,9 +4,8 @@ description: The project lifecycle from first contact to aftercare.
 status: draft
 owner: bjorn
 updated: 2026-09-09
+permalink: /05-workflows/
 ---
-
-# Workflows
 
 Read [Project lifecycle overview](lifecycle-overview.md) first — it is the map, and the rest
 of this section is the detail behind each phase.

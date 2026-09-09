@@ -4,9 +4,8 @@ description: Terms used across this documentation, including Dutch and English e
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /glossary/
 ---
-
-# Glossary
 
 Shared vocabulary. Add a term the moment you catch yourself explaining it for the second
 time, and note the Dutch equivalent where client-facing conversations use it.
@@ -15,9 +14,9 @@ time, and note the Dutch equivalent where client-facing conversations use it.
 
 | Term | Meaning |
 | --- | --- |
-| ADR | Architecture Decision Record. A one-page note explaining why a choice was made. See [09-decisions](09-decisions/). |
+| ADR | Architecture Decision Record. A one-page note explaining why a choice was made. See [09-decisions](09-decisions/README.md). |
 | Definition of done | The bar a task must clear before it counts as finished. See [the handbook](01-handbook/definition-of-done.md). |
-| Runbook | Step-by-step instructions for fixing a specific broken thing. See [06-runbooks](06-runbooks/). |
+| Runbook | Step-by-step instructions for fixing a specific broken thing. See [06-runbooks](06-runbooks/README.md). |
 | Aftercare | Ongoing maintenance and support after launch. Dutch: _onderhoud_. |
 | Intake | The first phase, turning a request into a defined project. |
 
@@ -36,7 +35,7 @@ time, and note the Dutch equivalent where client-facing conversations use it.
 | --- | --- |
 | Core Web Vitals | Google's page experience metrics: LCP, INP, CLS. See [performance budget](02-standards/performance-budget.md). |
 | HPOS | High-Performance Order Storage. WooCommerce orders in dedicated tables rather than posts. |
-| UX Builder | The Flatsome page builder. See [03-platforms/flatsome](03-platforms/flatsome/). |
+| UX Builder | The Flatsome page builder. See [03-platforms/flatsome](03-platforms/flatsome/README.md). |
 | HubDB | HubSpot's structured data tables. |
 | SPF / DKIM / DMARC | DNS records proving mail is legitimately sent on a domain's behalf. See [email deliverability](04-infrastructure/email-deliverability.md). |
 | TTL | Time To Live. How long a DNS record may be cached — the reason DNS changes are not instant. |

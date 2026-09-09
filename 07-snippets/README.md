@@ -4,9 +4,8 @@ description: Reusable code with the context needed to use it safely.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /07-snippets/
 ---
-
-# Snippets
 
 Code we keep reaching for. The value is not the code — it is the header comment explaining
 why it exists and where it has already been proven.

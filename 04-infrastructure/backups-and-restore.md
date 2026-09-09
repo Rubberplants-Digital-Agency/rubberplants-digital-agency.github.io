@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Backups and restore
-
 > **Draft** — not authoritative yet.
 
 ## What belongs here

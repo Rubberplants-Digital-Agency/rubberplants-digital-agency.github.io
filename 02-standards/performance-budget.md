@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Performance budget
-
 > **Draft** — not authoritative yet.
 
 ## What belongs here

@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Restore from backup
-
 > **Draft** — not authoritative yet.
 
 ## Symptoms

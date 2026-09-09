@@ -4,9 +4,8 @@ description: Setup, conventions, and maintenance for WordPress projects.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /03-platforms/wordpress/
 ---
-
-# WordPress
 
 The platform behind most of what we build. Start with
 [Local development](local-development.md) if you are setting up a project for the first time.

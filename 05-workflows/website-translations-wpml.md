@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-09-09
 ---
 
-# Website translations with WPML
-
 Translating a site with WPML is mostly about sequence. Each step below depends on the ones
 above it, so working out of order means redoing work: terms come back untranslated, pages
 pull in the original-language block, or permalinks change after the links pointing at them

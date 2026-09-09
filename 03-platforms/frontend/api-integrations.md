@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# API integrations
-
 > **Draft** — not authoritative yet.
 
 ## What belongs here

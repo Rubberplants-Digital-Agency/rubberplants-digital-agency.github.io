@@ -1,4 +1,11 @@
-# Contributing to the documentation
+---
+title: Contributing to the documentation
+description: How to write, review, and land a change to this documentation.
+status: draft
+owner: bjorn
+updated: 2026-09-09
+permalink: /contributing/
+---
 
 ## The rule that matters most
 
@@ -35,7 +42,7 @@ updated: 2026-08-07
 
 | Field | Rules |
 | --- | --- |
-| `title` | Sentence case. Matches the `# H1` directly below it. |
+| `title` | Sentence case. The site layout renders it as the page `<h1>`, so do not repeat it as a heading in the body. |
 | `description` | One sentence. Shows up in search results and folder indexes. |
 | `status` | `draft`, `review`, `current`, or `deprecated`. |
 | `owner` | The person who keeps it accurate. One name, not a team. |
@@ -62,7 +69,7 @@ team should be able to follow one on a platform they have never touched.
 
 - Changing how something works? The doc change goes in the same pull request as the code change.
 - Found something out of date? Fix it, or set `status: draft` and say what is wrong. Do not leave it looking authoritative.
-- Made a decision that closes off alternatives? Write an ADR in [09-decisions](09-decisions/).
+- Made a decision that closes off alternatives? Write an ADR in [09-decisions](09-decisions/README.md).
 
 ## Review
 

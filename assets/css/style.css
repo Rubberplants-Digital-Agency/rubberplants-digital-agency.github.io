@@ -1,0 +1,345 @@
+/* Rubberplants documentation — site styles.
+   Plain CSS on purpose: no front matter, so Jekyll copies it through untouched
+   rather than running it via Sass. No framework, no JavaScript — the section
+   menus are <details>/<summary>, which open on click and on keyboard alike. */
+
+:root {
+  --color-text: #1c1f23;
+  --color-muted: #5b6570;
+  --color-bg: #ffffff;
+  --color-surface: #f6f7f8;
+  --color-border: #e2e5e9;
+  --color-accent: #1f6f4a;
+  --color-accent-soft: #e8f2ec;
+
+  --measure: 46rem;       /* reading column */
+  --measure-wide: 60rem;  /* header and footer, so ten menu items have room */
+  --gutter: 1.5rem;
+  --radius: 4px;
+
+  --shadow-menu: 0 6px 20px rgba(28, 31, 35, 0.13);
+
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+a { color: var(--color-accent); }
+a:hover, a:focus { text-decoration: none; }
+
+/* ---------- Header ---------- */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem var(--gutter);
+
+  max-width: var(--measure-wide);
+  margin: 0 auto;
+  padding: 1.5rem var(--gutter) 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-logo {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  color: var(--color-text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-logo:hover, .site-logo:focus { color: var(--color-accent); }
+
+/* ---------- Navigation ---------- */
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1.125rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+}
+
+.nav-item > a {
+  display: inline-block;
+  color: var(--color-muted);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-item > a:hover,
+.nav-item > a:focus { color: var(--color-text); }
+
+/* Active item — driven by aria-current from the layout, so the styling follows
+   the accessibility state rather than duplicating it with a class. */
+.nav-item > a[aria-current="page"] {
+  color: var(--color-text);
+  border-bottom-color: var(--color-accent);
+}
+
+.nav-details { position: relative; }
+
+.nav-summary {
+  cursor: pointer;
+  color: var(--color-muted);
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  list-style: none;          /* hide the default disclosure triangle */
+  white-space: nowrap;
+}
+
+.nav-summary::-webkit-details-marker { display: none; }
+
+/* Own chevron, rotating when the menu is open. */
+.nav-summary::after {
+  content: "";
+  display: inline-block;
+  width: 0.36em;
+  height: 0.36em;
+  margin-left: 0.4em;
+  vertical-align: 0.15em;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.12s ease-out;
+}
+
+.nav-details[open] > .nav-summary::after { transform: rotate(-135deg); }
+
+.nav-summary:hover,
+.nav-summary:focus-visible,
+.nav-details[open] > .nav-summary { color: var(--color-text); }
+
+/* The section the current page belongs to. */
+.nav-summary.is-active {
+  color: var(--color-text);
+  border-bottom-color: var(--color-accent);
+}
+
+.nav-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+
+  min-width: 16rem;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  margin: 0.5rem 0 0;
+  padding: 0.35rem 0;
+  list-style: none;
+
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-menu);
+}
+
+/* Keep the last menus from running off the right edge. */
+.nav-list > .nav-item:nth-last-child(-n+3) .nav-menu {
+  left: auto;
+  right: 0;
+}
+
+.nav-menu__item > a {
+  display: block;
+  padding: 0.3rem 1rem;
+  color: var(--color-text);
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.nav-menu__item > a:hover,
+.nav-menu__item > a:focus { background: var(--color-surface); }
+
+.nav-menu__item > a[aria-current="page"] {
+  color: var(--color-accent);
+  font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--color-accent);
+}
+
+/* Sections that contain sub-folders (03-platforms): the subsection index acts as a
+   group label, its own pages sit indented beneath it. */
+.nav-menu__item--depth-1 > a {
+  font-weight: 600;
+  margin-top: 0.2rem;
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.nav-menu__item--depth-2 > a { padding-left: 1.75rem; }
+
+/* ---------- Main ---------- */
+
+.site-main {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem var(--gutter) 3rem;
+}
+
+.page-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.875rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.page-meta {
+  margin: 0 0 2rem;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.status {
+  display: inline-block;
+  margin-left: 0.25rem;
+  padding: 0.05em 0.5em;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  font-size: 0.8125rem;
+}
+
+.status--current {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.updated { margin-left: 0.25rem; }
+
+.site-main h2, .site-main h3, .site-main h4 {
+  margin: 2.25rem 0 0.75rem;
+  line-height: 1.3;
+}
+
+.site-main h2 {
+  font-size: 1.375rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-main h3 { font-size: 1.125rem; }
+.site-main h4 { font-size: 1rem; }
+.site-main img { max-width: 100%; height: auto; }
+
+blockquote {
+  margin: 1.5rem 0;
+  padding: 0.25rem 1rem;
+  border-left: 3px solid var(--color-border);
+  color: var(--color-muted);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-surface);
+  padding: 0.15em 0.35em;
+  border-radius: var(--radius);
+}
+
+pre {
+  /* Long code lines scroll inside the block instead of widening the page. */
+  overflow-x: auto;
+  padding: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  line-height: 1.5;
+}
+
+pre code { background: none; padding: 0; }
+
+/* Tables are used heavily in this repo; let wide ones scroll. */
+.site-main table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9375rem;
+}
+
+.site-main th, .site-main td {
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.site-main th { background: var(--color-surface); font-weight: 600; }
+
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--color-border); }
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  max-width: var(--measure-wide);
+  margin: 0 auto;
+  padding: 1.25rem var(--gutter) 2.5rem;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.site-footer p { margin: 0; }
+
+/* ---------- Narrow screens ---------- */
+
+@media (max-width: 48rem) {
+  /* No hover and not enough room to float a panel: let the menu expand in place
+     and push the page down instead. */
+  .nav-menu {
+    position: static;
+    min-width: 0;
+    max-height: none;
+    margin: 0.25rem 0 0.5rem;
+    border: 0;
+    border-left: 2px solid var(--color-border);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .nav-list > .nav-item:nth-last-child(-n+3) .nav-menu { right: auto; }
+
+  .nav-menu__item > a { padding-left: 0.75rem; }
+  .nav-menu__item--depth-2 > a { padding-left: 1.5rem; }
+}
+
+@media (max-width: 34rem) {
+  :root { --gutter: 1rem; }
+
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page-title { font-size: 1.5rem; }
+}

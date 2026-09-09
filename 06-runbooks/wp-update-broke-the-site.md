@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# A WordPress update broke the site
-
 > **Draft** — not authoritative yet.
 
 ## Symptoms

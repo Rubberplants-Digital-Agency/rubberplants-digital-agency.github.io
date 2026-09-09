@@ -4,9 +4,8 @@ description: Products, checkout, tax, emails, and shop performance.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /03-platforms/woocommerce/
 ---
-
-# WooCommerce
 
 Everything shop-specific. WordPress conventions still apply — see
 [WordPress](../wordpress/) — this folder covers what changes once there is money involved.

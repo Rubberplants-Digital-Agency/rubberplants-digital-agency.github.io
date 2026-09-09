@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Monitoring and uptime
-
 > **Draft** — not authoritative yet.
 
 ## What belongs here

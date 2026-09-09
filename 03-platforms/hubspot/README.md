@@ -4,9 +4,8 @@ description: CMS development, modules, HubDB, forms, and serverless functions.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /03-platforms/hubspot/
 ---
-
-# HubSpot
 
 For clients whose marketing stack already lives in HubSpot. Development is CLI-driven and
 the local workflow is quite unlike WordPress, so start with

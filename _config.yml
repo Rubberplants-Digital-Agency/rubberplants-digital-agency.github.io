@@ -1,0 +1,43 @@
+# Jekyll configuration for the org GitHub Pages site.
+# Published by GitHub Pages from main / root ("Deploy from a branch") — no Actions workflow.
+# This is an org site (rubberplants-digital-agency.github.io), so it serves from the domain
+# root: baseurl stays empty.
+
+title: Rubberplants Digital Agency
+description: The shared knowledge base for how Rubberplants builds, ships, and maintains websites.
+lang: en
+
+url: https://rubberplants-digital-agency.github.io
+baseurl: ""
+
+# /01-handbook/git-workflow/ rather than /01-handbook/git-workflow.html
+permalink: pretty
+
+# Every .md in this repo carries YAML front matter but none of them name a layout,
+# so apply the custom layout to everything. There is no `theme:` key on purpose —
+# the layout in _layouts/ is the whole theme.
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+# Both are enabled by default on GitHub Pages; listing them keeps a local
+# `bundle exec jekyll serve` behaving the same as production.
+# jekyll-relative-links rewrites the repo's relative `foo/bar.md` links to their
+# published URLs, so the same link works on GitHub and on the site.
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: false
+
+# README.md is the repo landing page and developer notes, not a site page.
+# LICENSE is not a page either.
+exclude:
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - vendor

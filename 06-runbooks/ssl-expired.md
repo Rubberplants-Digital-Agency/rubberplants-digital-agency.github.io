@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# SSL certificate expired
-
 > **Draft** — not authoritative yet.
 
 ## Symptoms

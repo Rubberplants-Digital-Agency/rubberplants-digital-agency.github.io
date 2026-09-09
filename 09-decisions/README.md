@@ -4,9 +4,8 @@ description: Architecture decision records — why we chose what we chose.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /09-decisions/
 ---
-
-# Decisions
 
 Short records of choices that closed off alternatives. The point is to stop the same debate
 being reopened from scratch in two years, and to make it obvious when the reasoning behind a

@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Version notes
-
 > **Draft** — not authoritative yet.
 
 ## What belongs here

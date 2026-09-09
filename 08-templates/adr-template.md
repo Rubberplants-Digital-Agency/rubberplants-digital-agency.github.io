@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Template: architecture decision record
-
 Copy everything below the line into `09-decisions/NNNN-short-slug.md`, then add a row to the
 [decisions index](../09-decisions/README.md).
 
@@ -23,8 +21,6 @@ status: current
 owner: <one name>
 updated: <YYYY-MM-DD>
 ---
-
-# NNNN — <The decision>
 
 - **Status:** Proposed | Accepted | Superseded by [NNNN](NNNN-slug.md) | Deprecated
 - **Date:** <YYYY-MM-DD>

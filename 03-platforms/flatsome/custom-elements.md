@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Custom UX Builder elements
-
 > **Draft** — not authoritative yet.
 
 ## What belongs here

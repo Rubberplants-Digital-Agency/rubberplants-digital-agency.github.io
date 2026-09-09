@@ -6,8 +6,6 @@ owner: bjorn
 updated: 2026-08-07
 ---
 
-# Store API and blocks
-
 > **Draft** — not authoritative yet.
 
 ## What belongs here

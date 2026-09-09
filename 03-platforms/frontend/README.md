@@ -4,9 +4,8 @@ description: Styling architecture, animation, build tooling, and integrations.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /03-platforms/frontend/
 ---
-
-# Front end
 
 Platform-independent front-end practice. What the browser eventually receives, regardless of
 whether it came out of WordPress or HubSpot.

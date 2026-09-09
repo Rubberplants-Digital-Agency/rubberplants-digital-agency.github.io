@@ -4,9 +4,8 @@ description: How the agency works — people, tools, and process.
 status: draft
 owner: bjorn
 updated: 2026-08-07
+permalink: /01-handbook/
 ---
-
-# Handbook
 
 The non-technical half of working here. If a question starts with "how do we…" rather than
 "how does the code…", the answer is probably in this section.
