@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0f110f">
 
+  {%- comment -%}
+    Kept out of search results. This tag is the part that actually removes a page
+    from an index — robots.txt only governs whether a crawler fetches it, and a
+    crawler that never fetches never sees this. See robots.txt for why the two
+    files have to agree.
+  {%- endcomment -%}
+  <meta name="robots" content="noindex, nofollow">
+
   {%- comment -%} Page title first, site title as the suffix; homepage shows the site title alone. {%- endcomment -%}
   {%- if page.title and page.title != site.title -%}
     <title>{{ page.title | strip_html }} · {{ site.title }}</title>

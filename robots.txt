@@ -1,0 +1,28 @@
+# This documentation is deliberately kept out of search results.
+#
+# The rules below look inconsistent on purpose, and the reason matters:
+#
+# A crawler that is blocked from FETCHING a page never sees that page's
+# `noindex` meta tag. So a blanket `Disallow: /` does not remove anything — it
+# only stops the fetch. A URL linked from somewhere else can then still be
+# listed as a bare result with no description. That case is live here: this
+# repository is public, and GitHub links to this site from the repository page.
+#
+# Letting the major engines fetch is what gets a page *removed* from an index
+# rather than merely unvisited. They crawl, find `noindex` in every page's
+# <head> (set in _layouts/default.html), and drop the page.
+#
+# Everything else is turned away at the door.
+#
+# Neither of these makes the content private. The repository is public, so the
+# site is public to anyone with the link. See CONTRIBUTING.md for what may and
+# may not be committed here.
+
+User-agent: Googlebot
+Disallow: /search.json
+
+User-agent: Bingbot
+Disallow: /search.json
+
+User-agent: *
+Disallow: /

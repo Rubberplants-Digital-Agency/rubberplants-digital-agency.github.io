@@ -50,9 +50,21 @@ build step to run before committing — push to `main` and the site rebuilds.
 | `assets/css/style.css` | All site styling. Plain CSS, no framework. |
 | `search.json` | The search index, generated from the pages at build time. Nothing to maintain. |
 | `assets/js/site.js` | Header search, the mobile menu, and the "On this page" contents column. The only JavaScript on the site. |
+| `robots.txt` | Keeps the site out of search results. Read the comments before changing it — the two halves depend on each other. |
 
 This file is listed under `exclude` in `_config.yml`, so it is the repository landing page
 only — it is not published as a site page.
+
+### Not in search results
+
+Every page carries `<meta name="robots" content="noindex, nofollow">`, and `robots.txt`
+turns away everything except Google and Bing — which are let through deliberately, because a
+crawler that cannot fetch a page never sees the `noindex` on it and may list the bare URL
+anyway. The two files only work together; changing one without the other breaks it.
+
+This hides the site, it does not protect it. The repository is public, so anyone with the
+link can read every page. What may be committed here has not changed — see
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Previewing locally
 

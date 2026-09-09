@@ -110,7 +110,9 @@ phrase buried deep in a long one. No WYSIWYG, so non-technical colleagues are
 effectively excluded from contributing. Images and diagrams are more effort than in a hosted
 tool. The repository is public, which means a permanent discipline around what may be
 committed — and now doubly so, because it is also a published website rather than a folder
-someone has to go looking for.
+someone has to go looking for. The site is kept out of search results (`noindex` on every
+page, plus `robots.txt`), but that hides it rather than protecting it: anyone with the link
+reads everything.
 
 **Revisit when:** the shallow index stops being good enough — someone searching for a phrase
 they know is in the docs and not finding it — or when someone outside the development team
