@@ -8,6 +8,8 @@ updated: 2026-08-07
 
 > **Draft** — not authoritative yet.
 
+Sites built from the WordPress stack kit: follow [Roll back](../05-workflows/wordpress-stack/deploy-and-roll-back.md#roll-back).
+
 ## Symptoms
 
 _How you know this is the problem you have._

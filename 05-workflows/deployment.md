@@ -8,6 +8,8 @@ updated: 2026-08-07
 
 > **Draft** — not authoritative yet.
 
+Sites built from the WordPress stack kit: see [Deploy and roll back](wordpress-stack/deploy-and-roll-back.md).
+
 ## What belongs here
 
 - Deployment method per project type
