@@ -3,7 +3,7 @@ title: Roll back a deploy
 description: Undoing a release that broke production.
 status: draft
 owner: bjorn
-updated: 2026-08-07
+updated: 2026-10-07
 ---
 
 > **Draft** — not authoritative yet.

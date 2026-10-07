@@ -6,7 +6,7 @@ owner: bjorn
 updated: 2026-10-07
 ---
 
-The kit is a private repository named `default-install`; clone it next to your project folders.
+The kit is a private repository; clone it as `default-install` next to your project folders.
 Its `scaffold.mjs` renders a new project, and its `PLAYBOOK-HUMAN.md` carries this manual in one
 file. Examples use the made-up project Acme Studio.
 
@@ -27,20 +27,30 @@ file. Examples use the made-up project Acme Studio.
    The author belongs to the project: set it in the repository, never with `--global`.
 
 3. Make an SSH key for this computer, in Git Bash. One key per computer, so you can revoke one
-   without the other:
+   without the other. A new computer may have no `.ssh` folder yet, and ssh-keygen does not
+   create it:
 
    ```bash
+   mkdir -p ~/.ssh
    ssh-keygen -t ed25519 -f ~/.ssh/acme-studio_deploy -N "" -C "acme-studio-deploy"
    cat ~/.ssh/acme-studio_deploy.pub
    ```
 
-   In PowerShell, write `-N '""'`: Windows PowerShell 5.1 drops the empty argument. Without a
-   passphrase nothing prompts during deploys, but anyone with your Windows account can reach the
-   server. Add the public key in the Hub: the site → Hosting → SFTP/SSH → your SSH user, or a new
-   one.
+   In PowerShell, Windows PowerShell 5.1 drops the empty argument and does not expand `~` for
+   ssh-keygen, so write:
 
-4. Add the alias to `~/.ssh/config` (`%USERPROFILE%\.ssh\config`), with the host and user the Hub
-   shows:
+   ```powershell
+   New-Item -ItemType Directory -Force "$HOME\.ssh" | Out-Null
+   ssh-keygen -t ed25519 -f "$HOME\.ssh\acme-studio_deploy" -N '""' -C "acme-studio-deploy"
+   Get-Content "$HOME\.ssh\acme-studio_deploy.pub"
+   ```
+
+   Without a passphrase nothing prompts during deploys, but anyone with your Windows account can
+   reach the server. Add the public key in the Hub: the site → Hosting → SFTP/SSH → your SSH
+   user, or a new one.
+
+4. Add the alias to `~/.ssh/config` (`%USERPROFILE%\.ssh\config`; in Notepad choose "All files",
+   or it saves `config.txt`), with the host and user the Hub shows:
 
    ```text
    Host acme-studio
@@ -77,8 +87,10 @@ file. Examples use the made-up project Acme Studio.
    WP_APP_PASSWORD=<the application password, spaces allowed>
    ```
 
-   Then run `npm run setup:mcp` in PowerShell. It writes `.mcp.json`, tests the connection and
-   deletes `.wp-credentials`. Never paste the password into a chat or a command line.
+   Then run `npm run setup:mcp` in PowerShell. It writes `.mcp.json`, tests the connection and,
+   when the test passes, deletes `.wp-credentials`. When the test fails, the file stays (git
+   ignores it): fix the problem and run the command again, or delete the file. Never paste the
+   password into a chat or a command line.
 
 8. If you use Claude Code on this computer too, run this in the project folder:
 
@@ -89,8 +101,9 @@ file. Examples use the made-up project Acme Studio.
    It writes only the files git does not carry and adds missing skills; it never overwrites
    committed files.
 
-9. Test, in PowerShell: `npm run wp -- --info` proves SSH and WP-CLI, and
-   `npm run styles:status` proves the Application Password and WPCodeBox.
+9. Test, in PowerShell: `npm run wp -- option get home` proves SSH, WP-CLI and
+   `DEPLOY_WP_ROOT` (it prints the site URL), and `npm run styles:status` proves the Application
+   Password and WPCodeBox.
 
 ## A new project
 
@@ -106,10 +119,12 @@ named after the folder and is private.
 - Astra installed; Spectra Blocks and the MCP Adapter plugin (`mcp-adapter`) active; WooCommerce
   for a shop.
 - WPCodeBox 2, installed from the zip in the WPCodeBox account, with the licence key in its
-  settings. Allow its MCP tools: WP admin → WPCodeBox 2 → **MCP / AI Access** (check the exact
-  place) → the read tools plus `wpcodebox_create_snippet`, `wpcodebox_update_snippet`,
-  `wpcodebox_enable_snippet` and `wpcodebox_create_folder`. Leave `wpcodebox_delete_snippet` and
-  `wpcodebox_run_snippet` off.
+  settings. Allow its MCP tools: WP admin → WPCodeBox 2 → the toolbar button **MCP / AI**, which
+  opens the dialog "MCP / AI Access" → "Tools the agent may call" → the read tools plus
+  `wpcodebox_create_snippet`, `wpcodebox_update_snippet`, `wpcodebox_enable_snippet` and
+  `wpcodebox_create_folder`, then save. Leave `wpcodebox_delete_snippet` and
+  `wpcodebox_run_snippet` off; `wpcodebox_disable_snippet` is optional, as the style tools never
+  use it.
 
 ### On your computer
 
@@ -153,7 +168,10 @@ named after the folder and is private.
 9. Styles: `npm run styles:push`. The first push creates the folder, every partial and the main
    snippet, and enables it. Then `npm run purge`.
 10. Check as a visitor: the site answers 200, `npm run wp -- theme list --status=active` shows the
-    child theme, and the page source has a `<style class='wpcb2-inline-style'>` block.
+    child theme, and the page source contains `wpcb2-inline-style` (WPCodeBox writes
+    `<style  class='wpcb2-inline-style'>` with two spaces, so search for the class name). In Git
+    Bash, `curl -s https://acme-studio.tempurl.host/ | grep -c wpcb2-inline-style` prints 1 or
+    more.
 
 When nobody needs the Application Password any more, revoke it in **Users → Profile → Application
 Passwords**. `npm run setup:mcp` with a new one reconnects.

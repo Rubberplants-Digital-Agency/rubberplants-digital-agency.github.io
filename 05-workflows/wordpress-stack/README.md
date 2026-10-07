@@ -32,6 +32,7 @@ project **Acme Studio**. Take the real values from the project's `wp-stack.json`
 | Anything over SSH | A key on the site's WPMU DEV SSH user (the Hub → the site → Hosting → SFTP/SSH), a `Host` alias in `~/.ssh/config`, and the project's `.deploy.env` |
 | Style pushes | WPCodeBox 2 on the site, licensed, with its MCP write tools allowed, and `.mcp.json` from `npm run setup:mcp` |
 | Deploys without SSH | A browser, GitHub access and a WordPress administrator login |
+| A new project | The GitHub CLI `gh`, signed in with `gh auth login`. Without it: create the private repository on github.com, then `git remote add origin https://github.com/<owner>/acme-studio.git` and `git push -u origin main` |
 | Windows | Git for Windows, which brings Git Bash. Windows 10 and 11 ship the OpenSSH client and `tar.exe` the tools call |
 
 ## How the stack fits together
@@ -89,7 +90,7 @@ without it, npm keeps flags such as `--dry-run` for itself.
 | Command | What it does |
 | --- | --- |
 | `npm run check` | PHP syntax check of the theme and the plugin, then `styles:check` |
-| `npm run styles:check` | Compiles `wpcodebox/` locally the way WPCodeBox will; no network |
+| `npm run styles:check` | Compiles `wpcodebox/` locally the way WPCodeBox will; no network. `-- --server` also compiles with the site's own compiler, read-only |
 | `npm run styles:status` | Read-only: which snippets on the site differ from `wpcodebox/` |
 | `npm run styles:pull` | Writes the snippets' code into `wpcodebox/`; refuses to overwrite uncommitted edits |
 | `npm run styles:push` | Check, then save the snippets and enable the main one; `-- --dry-run` lists the calls |

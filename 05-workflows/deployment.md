@@ -3,7 +3,7 @@ title: Deployment
 description: Getting changes to production predictably.
 status: draft
 owner: bjorn
-updated: 2026-08-07
+updated: 2026-10-07
 ---
 
 > **Draft** — not authoritative yet.

@@ -35,26 +35,33 @@ PowerShell, in the project folder:
 
 | Command | What it does |
 | --- | --- |
-| `npm run styles:check` | Compiles `wpcodebox/` locally the way WPCodeBox will, the main file and each partial on its own. No network. Errors come as `file:line: problem` |
-| `npm run styles:status` | Read-only: per snippet `same`, `differs, the file has +N -M lines`, `not on the site; push creates it` or `only on the site`, and whether the main snippet is enabled |
-| `npm run styles:push` | `styles:check`, then saves every partial (`_global_variables` first), saves the main snippet when it changed, enables it. `-- --dry-run` lists the calls and sends none |
-| `npm run styles:pull` | Writes the snippets' code into `wpcodebox/`. Read-only on the site. Refuses to overwrite a file with uncommitted changes unless `-- --force` |
+| `npm run styles:check` | Compiles `wpcodebox/` locally the way WPCodeBox will, the main file and each partial on its own, and stops on SCSS the site's compiler treats differently (rule 6). No network. Errors come as `file:line: problem`. `-- --server` also compiles with the site's own compiler over SSH, read-only |
+| `npm run styles:status` | Read-only: per snippet `same`, `differs, the file has +N -M lines`, `not on the site; push creates it` or `only on the site`; for the main snippet whether it is enabled, and its hooks when they differ from `wp-stack.json`; then warnings |
+| `npm run styles:push` | `styles:check`, the compile on the site (when `.deploy.env` exists), a check that the site's snippets match `wp-stack.json`, then saves every partial (`_global_variables` first), saves the main snippet when it changed, enables it. `-- --dry-run` lists the calls and sends none |
+| `npm run styles:pull` | Writes the snippets' code into `wpcodebox/`. Read-only on the site. Refuses to overwrite a file with uncommitted changes unless `-- --force`, and leaves out partials the main snippet on the site does not use |
 | `npm run purge` | After every push: visitors get cached pages, CSS included, until the cache is cleared |
 
 The loop: edit `wpcodebox/*.scss`, `npm run styles:push`, `npm run purge`, look at the site as a
 visitor, commit.
 
-The push protects the live CSS. When a partial fails to save, it does not save or enable the main
-snippet, so the site keeps the CSS it had. It stops at once on a firewall block, wrong
+The push protects the live CSS. Before any write it compiles everything with the site's own
+compiler (when `.deploy.env` exists) and checks that the snippets on the site match
+`wp-stack.json`: no partial title elsewhere on the site, no second SCSS snippet in the folder.
+Each partial save recompiles the main snippet, so partials saved earlier in a push are live at
+once. When a partial fails, WPCodeBox stores its code anyway; the push then neither saves nor
+enables the main snippet, which keeps the CSS of its last successful compile. Fix the SCSS and
+push again; do not save the main snippet in WP admin meanwhile, because it would compile with
+the broken partial and lose all CSS. The push stops at once on a firewall block, wrong
 credentials or missing WPCodeBox rights. The first push on a site creates the folder, every
 partial and the main snippet.
 
 The tools sign in with the Application Password in `.mcp.json`
 ([Set up without Claude](set-up-without-claude.md#another-computer)), and WPCodeBox must allow its
-MCP write tools: WP admin → WPCodeBox 2 → **MCP / AI Access** (check the exact place) →
-`wpcodebox_create_snippet`, `wpcodebox_update_snippet`, `wpcodebox_enable_snippet` and
-`wpcodebox_create_folder`, next to the read tools. Leave `wpcodebox_delete_snippet` and
-`wpcodebox_run_snippet` off.
+MCP write tools: WP admin → WPCodeBox 2 → the toolbar button **MCP / AI**, which opens the
+dialog "MCP / AI Access" → "Tools the agent may call" → `wpcodebox_create_snippet`,
+`wpcodebox_update_snippet`, `wpcodebox_enable_snippet` and `wpcodebox_create_folder`, next to
+the read tools. Leave `wpcodebox_delete_snippet` and `wpcodebox_run_snippet` off;
+`wpcodebox_disable_snippet` is optional, as the style tools never use it.
 
 ## The rules WPCodeBox imposes
 
@@ -75,13 +82,20 @@ scssphp. That gives rules that hold in WP admin and in git alike:
 5. **Partial titles are unique on the whole site.** WPCodeBox finds a partial by title in any
    folder, so a second `_base` elsewhere may be the one it uses.
 6. **scssphp is not Dart Sass.** No `@use 'sass:math'` or `math.div()`: use global functions such
-   as `percentage()` and `rgba($c, .5)`. Interpolate variables in `calc()`:
-   `calc(100% - #{$gutter})`. Wrap mixed-unit arithmetic inside `clamp()` in `calc()`. Write
-   `aspect-ratio: #{16} / #{9}`. `styles:check` compiles with Dart Sass, so it cannot catch these.
+   as `percentage()` and `rgba($c, .5)`. Interpolate variables in `calc()`, `min()`, `max()` and
+   custom properties: `calc(100% - #{$gutter})`, `min(100%, #{$width})`,
+   `--acme-brand: #{$brand}`. Wrap arithmetic inside `clamp()` in `calc()`:
+   `clamp(1rem, calc(2vw + 1rem), 3rem)`. Keep slashes with `#{1} / #{3}`: scssphp divides
+   `grid-area: 1 / 3` into `0.3333333333` (only `font`, `grid-row`, `grid-column` and
+   `border-radius` keep their slash). `styles:check` compiles with Dart Sass but stops on all of
+   these; `npm run styles:check -- --server` compiles with the site's own scssphp.
 7. **Never break the main snippet.** A save of the main snippet that does not compile leaves it
    with no CSS at all: the site loses every style. A partial whose save breaks the main snippet's
    recompile leaves the old CSS in place instead. So edit partials, and touch the main snippet only
    to add or remove a partial's line.
+8. **Delete an old partial last.** Saving a partial recompiles the main snippet as it is on the
+   site. Take the partial's line out of the main snippet first (a push of `site.scss` without
+   it), and delete the partial's snippet only after that.
 
 ## Editing in WP admin
 
@@ -147,11 +161,17 @@ git push
 
 - **WPCodeBox's list of errored snippets says nothing about SCSS.** It only flags PHP snippets.
   SCSS errors come back from each save: read the push output, or the error WPCodeBox shows.
-- **A passing `styles:check` is not a passing server compile.** It uses Dart Sass; the site uses
-  scssphp. Rule 6 lists the known differences.
+- **A passing `styles:check` is not a passing server compile.** It uses Dart Sass and stops on
+  the known differences of rule 6; the site uses scssphp. `-- --server`, and every push with
+  `.deploy.env`, compiles with the site's own scssphp.
 - **Logged in, you always see the new CSS.** Visitors see it only after a purge.
 - **The push never deletes.** After renaming or removing a partial, delete its old snippet in
-  WPCodeBox, or its title keeps clashing.
+  WPCodeBox once a push has taken it out of the main snippet (rule 8), or its title keeps
+  clashing. `styles:pull` leaves such leftovers out.
+- **A site whose styles are already in WPCodeBox.** The push refuses while the folder holds
+  another SCSS snippet or a partial title exists elsewhere on the site. If those are the
+  project's own snippets, set `wpcodebox.folder`, `mainTitle` and `main` in `wp-stack.json` to
+  the names on the site, then `npm run styles:pull` and commit before the first push.
 
 ## Related
 

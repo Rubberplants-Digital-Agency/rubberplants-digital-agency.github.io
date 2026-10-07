@@ -88,12 +88,16 @@ Details in [Styles with WPCodeBox](styles-with-wpcodebox.md#when-a-push-broke-th
 
 | You see | Cause | Fix |
 | --- | --- | --- |
-| `Permission denied (publickey)` | The key is not on that SSH user, the alias names another user or host, or ssh offers another key | Check the key in the Hub (Hosting → SFTP/SSH); keep `IdentitiesOnly yes` in the alias; `ssh -v acme-studio` shows the key it offers |
+| `Permission denied (publickey)` | The key is not on that SSH user, the alias names another user or host, or ssh offers another key | Check the key in the Hub (Hosting → SFTP/SSH); keep `IdentitiesOnly yes` in the alias; `ssh -v -o BatchMode=yes acme-studio true` shows the key it offers |
 | `Host key verification failed` | The alias lacks `StrictHostKeyChecking accept-new`, or the server's key changed | Add the line; if the key changed, confirm in the Hub before `ssh-keygen -R <host>` |
-| A tool stops with exit 255 | Windows' `ssh.exe` could not connect | `C:\Windows\System32\OpenSSH\ssh.exe -o BatchMode=yes acme-studio true` shows why |
+| A tool stops with exit 255 | Windows' `ssh.exe` could not connect | In PowerShell: `C:\Windows\System32\OpenSSH\ssh.exe -o BatchMode=yes acme-studio true` shows why (Git Bash: `/c/Windows/System32/OpenSSH/ssh.exe -o BatchMode=yes acme-studio true`). Works in Git Bash's `ssh` but not there: a key with a passphrase in Git Bash's agent, which Windows' ssh does not see |
 | HTML 403 "Forbidden Access" from `setup:mcp` or `styles:*` | The WPMU DEV firewall blocked the request before WordPress saw it | Check the site's WAF in the Hub; never reshape a request to slip past it |
 | 401 from `setup:mcp` or `styles:*` | Wrong username, or the login password instead of an Application Password | New Application Password, `.wp-credentials`, `npm run setup:mcp` |
-| `wpcb_mcp_tool_not_enabled` or `wpcb_mcp_live_update_forbidden` | WPCodeBox's MCP rights are off | WPCodeBox 2 → MCP / AI Access: allow create, update and enable snippet, and create folder |
+| `wpcb_mcp_tool_not_enabled` or `wpcb_mcp_live_update_forbidden` | WPCodeBox's MCP rights are off | WPCodeBox 2 → the toolbar button MCP / AI → "Tools the agent may call": allow create, update and enable snippet, and create folder |
+| `styles:push`: "already exists outside the folder", "The folder also holds the SCSS snippet" or "is not in the folder" | The snippets on the site do not match `wp-stack.json`; nothing was sent | If they are the project's snippets, set `wpcodebox.folder`, `mainTitle` and `main` in `wp-stack.json` to the names on the site, `npm run styles:pull`, commit, push. Otherwise rename, move or delete those snippets in WPCodeBox |
+| `styles:push`: "the main snippet ... still names @use '_old';" | The main snippet on the site still names a partial that `site.scss` dropped | Push usually takes the line out first by itself. When it refuses, push in two steps as its message says |
+| `does not compile with the site's scssphp` | The site's compiler rejects SCSS that Dart Sass accepted; nothing was sent | Fix the `file:line` it names ([rule 6](styles-with-wpcodebox.md#the-rules-wpcodebox-imposes)), push again |
+| `The compile on the site could not run` | `styles:push` could not reach the server over SSH | Fix SSH (`npm run wp -- cli version`), or push without that check: `npm run styles:push -- --no-server-check` |
 | `rest_ability_cannot_execute` or a JSON 403 | The Application Password's user is not an administrator | Use an administrator's Application Password |
 | `rest_ability_not_found` | WPCodeBox 2 is missing or older than 1.4 | Install or update and activate it |
 | `.mcp.json not found` | This computer has no site connection yet | `.wp-credentials`, then `npm run setup:mcp` |

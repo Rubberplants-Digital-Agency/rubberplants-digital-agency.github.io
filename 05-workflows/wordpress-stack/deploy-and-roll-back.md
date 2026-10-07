@@ -23,7 +23,9 @@ The styles never travel with a deploy: they live in WPCodeBox
 The same steps as `npm run deploy`, one package at a time. Shell: **Git Bash**, in the project
 folder, with the commit you want to deploy checked out. For the theme and the plugin together,
 run steps 1 to 3 for both packages first, and step 4 for each only when both passed, the plugin
-first. That keeps the deploy all or nothing.
+first. A lint failure then stops both. If the theme's step 4 fails after the plugin's
+succeeded, put the plugin back with the [rollback by hand](#by-hand-over-ssh) (`KIND=plugins`,
+`SLUG=acme-studio-core`).
 
 **Step 1. Set the values** from `.deploy.env` and `wp-stack.json`:
 
@@ -39,7 +41,7 @@ SLUG=acme-studio                             # the theme slug, or the plugin slu
 gives the files the usual 755/644 modes.
 
 ```bash
-tar -czf - --exclude=node_modules --exclude=.DS_Store --exclude='*.map' -C "wp-content/$KIND" "$SLUG" |
+tar -czf - --exclude=node_modules --exclude=.git --exclude=.svn --exclude=.hg --exclude=.DS_Store --exclude=Thumbs.db --exclude=desktop.ini --exclude='*.log' --exclude='*.map' -C "wp-content/$KIND" "$SLUG" |
   ssh -o BatchMode=yes "$HOST" "umask 022 && cd '$ROOT/wp-content/$KIND' && rm -rf '.$SLUG.incoming' && mkdir '.$SLUG.incoming' && tar -xzf - -C '.$SLUG.incoming' && echo 'Uploaded to $KIND/.$SLUG.incoming'"
 ```
 
@@ -113,8 +115,9 @@ the zip yourself. This works from a phone's browser.
 1. Get the commit onto `main`, or start the Action by hand: the repository → **Actions** → Build
    theme and plugin zips → **Run workflow**, and pick the branch.
 2. Open the latest successful run → **Artifacts** → `acme-studio-theme` or
-   `acme-studio-core-plugin`. The download is a zip with the `acme-studio/` folder at its root:
-   upload it as it is, unzipped. Artifacts expire after 90 days.
+   `acme-studio-core-plugin`. The download is a zip with the `acme-studio/` (or
+   `acme-studio-core/`) folder at its root: upload that zip as it is; do not unzip it.
+   Artifacts expire after 90 days.
 3. Back up first: a backup in the Hub (the site → Backups; check the exact label), or note the run
    you are replacing, whose artifact is your rollback.
 4. Install it in WP admin (WordPress 7.1 labels; older versions say "Add New Plugin" and "Add New
@@ -123,6 +126,10 @@ the zip yourself. This works from a phone's browser.
      is already installed." → **Replace current with uploaded**.
    - Theme: **Appearance → Themes → Add Theme → Upload Theme** → the zip → **Install Now** →
      "This theme is already installed." → **Replace installed with uploaded**.
+
+   No **Add Plugin**, **Add Theme** or upload button? The site defines `DISALLOW_FILE_MODS`
+   (check with `npm run wp -- config get DISALLOW_FILE_MODS`): deploy over SSH or SFTP instead.
+   `DISALLOW_FILE_EDIT` only hides the file editors and does not matter here.
 5. Purge: the Hub → the site → Hosting → Tools (check the exact label), or `npm run purge` from a
    computer. Then check the site in a private window.
 
