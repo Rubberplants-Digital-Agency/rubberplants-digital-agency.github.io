@@ -3,10 +3,12 @@ title: Roll back a deploy
 description: Undoing a release that broke production.
 status: draft
 owner: bjorn
-updated: 2026-08-07
+updated: 2026-10-07
 ---
 
 > **Draft** — not authoritative yet.
+
+Sites built from the WordPress stack kit: follow [Roll back](../05-workflows/wordpress-stack/deploy-and-roll-back.md#roll-back).
 
 ## Symptoms
 

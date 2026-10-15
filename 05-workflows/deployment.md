@@ -3,10 +3,12 @@ title: Deployment
 description: Getting changes to production predictably.
 status: draft
 owner: bjorn
-updated: 2026-08-07
+updated: 2026-10-07
 ---
 
 > **Draft** — not authoritative yet.
+
+Sites built from the WordPress stack kit: see [Deploy and roll back](wordpress-stack/deploy-and-roll-back.md).
 
 ## What belongs here
 

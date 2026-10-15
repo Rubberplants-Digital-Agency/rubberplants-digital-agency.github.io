@@ -3,7 +3,7 @@ title: Workflows
 description: The project lifecycle from first contact to aftercare.
 status: draft
 owner: bjorn
-updated: 2026-09-09
+updated: 2026-10-07
 permalink: /05-workflows/
 ---
 
@@ -28,6 +28,8 @@ Sitting outside the sequence:
   than building a new one.
 - [Website translations with WPML](website-translations-wpml.md) — the order to translate a
   WordPress site in, whether that happens during the build or long after launch.
+- [WordPress stack manual](wordpress-stack/) — setting up, styling, deploying, rolling back and
+  rescuing a site built from the WordPress stack kit, without Claude.
 
 ## Workflows versus templates
 
